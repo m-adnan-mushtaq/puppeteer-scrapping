@@ -1,0 +1,64 @@
+<%-include('./partials/header') %>
+
+
+    <div class="form-box my-3 p-3 text-center">
+        <h4 class="text-muted">Place Your Website location Address Url Here!</h4>
+        <small class="text-small text-muted">Grab the location address URL of your website from google maps and place it here</small>
+        <form action="/reviews" method="post">
+            <div class="search-box">
+                <input type="url" name="url" id="url" class="search-input" placeholder="http://yourwebsite.com..." required title="Plese Enter a valid URL address!"  >
+
+                <button class="search-button" type="submit" role="button">
+                    <img role="button" src="https://img.icons8.com/ios-filled/100/000000/search--v1.png"/>
+                </button>
+            </div>
+
+        </form>
+    </div>
+
+    <h3 class="text-light mb-5 pb-5">
+        Reviews <%=(locals.website)?'of AdRightly':'of Your Website' %> 
+    </h3>
+    <% if (reviewsArr.length) { %>
+        <!-- responser show reviews here -->
+    <div class="row g-5 text-center mx-auto" >
+        <% reviewsArr.forEach( user => { %>
+            <div class="col-md-3 m-2 text-center shadow-lg p-3 mb-5 bg-white rounded">
+                <div class="img-name">
+                    <img src="<%=user.imagePath%>"/>
+                    <h3><%=user.uname%></h3>
+                    <p class="text-right time-text text-muted">2 months age</p>
+                </div>
+                <div class="my-3 text-center">
+                    <p class="starBox" aria-label="<%=user.stars%>">
+                    </p>
+                    
+                     <p class="text-muted"><%=user.review%> </p>   
+                </div>
+            </div>
+        <% }) %>
+        
+
+    </div>
+    <% } else {%>
+        <p>No reviews found.</p>
+     <% } %>   
+    
+
+<%-include('./partials/footer') %>
+<script>
+    // Close onclick outside
+        let stars=document.querySelectorAll('.starBox')
+        if (stars.length) {
+            
+            stars.forEach(element => {
+                let n= element.getAttribute('aria-label')
+                let htmlStr=''
+                for (let i = 0; i < parseInt(n); i++) {
+                    htmlStr +='⭐'
+                }
+                element.innerHTML=htmlStr
+            });
+        }
+</script>
+<!-- <script  src="js/main.js"></script> -->
